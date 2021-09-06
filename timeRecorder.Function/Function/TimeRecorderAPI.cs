@@ -17,8 +17,8 @@ namespace timeRecorder.Function.Function
     public static class TimeRecorderAPI
     {
         [FunctionName(nameof(CreateRegistry))]
-        public static async Task<IActionResult> CreateRegistry([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "timer")]
-            HttpRequest req,[Table("timer", Connection = "AzureWebJobsStorage")] CloudTable registriesTable,ILogger log)
+        public static async Task<IActionResult> CreateRegistry([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "Timer")]
+            HttpRequest req,[Table("Timer", Connection = "AzureWebJobsStorage")] CloudTable registriesTable,ILogger log)
         {
             log.LogInformation("Registry creation");
 
@@ -87,8 +87,8 @@ namespace timeRecorder.Function.Function
         }
 
         [FunctionName(nameof(UpdateRegistry))]
-        public static async Task<IActionResult> UpdateRegistry([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "timer/{Id}")] 
-            HttpRequest req,[Table("timer", Connection = "AzureWebJobsStorage")] CloudTable registriesTable,string Id,ILogger log)
+        public static async Task<IActionResult> UpdateRegistry([HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "Timer/{Id}")] 
+            HttpRequest req,[Table("Timer", Connection = "AzureWebJobsStorage")] CloudTable registriesTable,string Id,ILogger log)
         {
             log.LogInformation("Registry update");
 
@@ -135,9 +135,9 @@ namespace timeRecorder.Function.Function
         }
 
         [FunctionName(nameof(DeleteRegister))]
-        public static async Task<IActionResult> DeleteRegister([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "time/{Id}")] 
-            HttpRequest req,[Table("timer", "timer", "{Id}", Connection = "AzureWebJobsStorage")] TimeRecorderEntity timeRecorderEntity,
-            [Table("time", Connection = "AzureWebJobsStorage")] CloudTable timeTable,string Id,ILogger log)
+        public static async Task<IActionResult> DeleteRegister([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "Timer/{Id}")] 
+            HttpRequest req,[Table("Timer", "Timer", "{Id}", Connection = "AzureWebJobsStorage")] TimeRecorderEntity timeRecorderEntity,
+            [Table("Timer", Connection = "AzureWebJobsStorage")] CloudTable timeTable,string Id,ILogger log)
         {
             log.LogInformation("Delete a registry");
 
@@ -167,8 +167,8 @@ namespace timeRecorder.Function.Function
         }
 
         [FunctionName(nameof(GetRegistry))]
-        public static ActionResult GetRegistry([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "time/{Id}")] 
-            HttpRequest req,[Table("time", "time", "{Id}", Connection = "AzureWebJobsStorage")] TimeRecorderEntity timeRecorderEntity,
+        public static ActionResult GetRegistry([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Timer/{Id}")] 
+            HttpRequest req,[Table("Timer", "Timer", "{Id}", Connection = "AzureWebJobsStorage")] TimeRecorderEntity timeRecorderEntity,
            string Id,ILogger log)
         {
             log.LogInformation("Get a registry");
@@ -196,10 +196,8 @@ namespace timeRecorder.Function.Function
         }
 
         [FunctionName(nameof(GetAllRegistries))]
-        public static async Task<ActionResult> GetAllRegistries(
-           [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "time")] HttpRequest req,
-           [Table("time", Connection = "AzureWebJobsStorage")] CloudTable timeTable,
-           ILogger log)
+        public static async Task<ActionResult> GetAllRegistries([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "Timer")] 
+            HttpRequest req,[Table("Timer", Connection = "AzureWebJobsStorage")] CloudTable timeTable,ILogger log)
         {
             log.LogInformation("Get all registries");
 

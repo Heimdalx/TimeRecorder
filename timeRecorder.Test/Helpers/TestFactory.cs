@@ -27,12 +27,25 @@ namespace timeRecorder.Test.Helpers
             };
         }
 
-        internal static DefaultHttpRequest CreateHttpRequest(Timer timerRequest)
+        public static DefaultHttpRequest CreateHttpRequest(Timer timerRequest)
         {
             string request = JsonConvert.SerializeObject(timerRequest);
             return new DefaultHttpRequest(new DefaultHttpContext())
             {
                 Body = GenerateStreamFromString(request),
+            };
+        }
+
+        public static WrapeEntity GetWrapperEntity()
+        {
+            return new WrapeEntity
+            {
+                ETag = "*",
+                PartitionKey = "ConsolidatedRegisters",
+                RowKey = Guid.NewGuid().ToString(),
+                IdEmployee = 1,
+                Date = DateTime.UtcNow,
+                MinsDone = 120
             };
         }
 
@@ -99,6 +112,18 @@ namespace timeRecorder.Test.Helpers
             writer.Flush();
             stream.Position = 0;
             return stream;
+        }
+        public static DefaultHttpRequest CreateHttpRequest(string date)
+        {
+            return new DefaultHttpRequest(new DefaultHttpContext())
+            {
+                Path = $"/{date}"
+            };
+        }
+
+        public static List<WrapeEntity> GetWrappeEntitites()
+        {
+            return new List<WrapeEntity>();
         }
     }
 }
